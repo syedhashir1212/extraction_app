@@ -4,6 +4,7 @@ import sys
 import warnings
 import streamlit as st
 
+
 warnings.filterwarnings('ignore')
 logging.getLogger('streamlit').setLevel(logging.ERROR)
 
