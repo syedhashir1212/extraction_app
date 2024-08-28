@@ -129,7 +129,7 @@ SQLAlchemy==0.7.10
 sqlalchemy-migrate==0.11.0
 sqlparse==0.5.1
 stack-data==0.6.3
-streamlit==1.22.0
+streamlit >= 1.9.2
 Tempita==0.5.2
 tenacity==8.5.0
 terminado==0.18.1
