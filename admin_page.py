@@ -186,7 +186,7 @@ def extract_due_date(text):
     match1 = re.search(pattern1, text)
     
     if match1:
-        print(f"Found due date before 'Inspection Date': {match1.group(1)}")
+        # print(f"Found due date before 'Inspection Date': {match1.group(1)}")
         return match1.group(1)
     
     # Second pattern: tries to find a date after "Due Date:"
@@ -268,10 +268,10 @@ def save_pdf_pages(pdf_path, output_folder):
                 customer = 'N/A'
 
             # Debugging output
-            print(f"Original Type/Description: {result.get('Type/Description', 'N/A')}")
-            print(f"Processed Type/Description: {type_description}")
-            print(f"Original Customer: {result.get('Customer', 'N/A')}")
-            print(f"Processed Customer: {customer}")
+            # print(f"Original Type/Description: {result.get('Type/Description', 'N/A')}")
+            # print(f"Processed Type/Description: {type_description}")
+            # print(f"Original Customer: {result.get('Customer', 'N/A')}")
+            # print(f"Processed Customer: {customer}")
 
             filename = f"{result['Work Order No']}_{result['File Name']}_{type_description}_{result['Location']}_{result['Certificate No']}_{result['Expire Date']}_{customer}.pdf"
             cleaned_filename = clean_filename(filename)
