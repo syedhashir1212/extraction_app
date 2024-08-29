@@ -36,26 +36,32 @@ def create_download_link(file_data, file_name):
 
 def display():
     st.title("SPRINT OIL AND GAS PORTAL")
-    st.write("Search for data by various criteria.")
+    st.write("Search for data by various criteria or show all records.")
 
     if 'data' not in st.session_state:
         st.session_state.data = None
     if 'page_num' not in st.session_state:
         st.session_state.page_num = 0
 
-    search_options = ['work_order_no','file_name','part_no', 'certificate_no', 'location', 'expire_date']
+    search_options = ['work_order_no', 'file_name', 'part_no', 'certificate_no', 'location', 'expire_date', 'Show All Data']
     search_by = st.selectbox('Search by', search_options)
     
+    show_all = False
+
     if search_by == 'expire_date':
         after_date = st.date_input("Select a date to find records expiring after", value=datetime.date.today())
         search_value = None
+    elif search_by == 'Show All Data':
+        after_date = None
+        search_value = None
+        show_all = True
     else:
         after_date = None
         search_value = st.text_input(f"Enter {search_by.replace('_', ' ').title()}")
 
     if st.button('Search'):
         with st.spinner('Fetching data...'):
-            data = fetch_data_from_db(search_by, search_value, after_date)
+            data = fetch_data_from_db(search_by, search_value, after_date, show_all=show_all)
             if not data.empty:
                 data['Download'] = data.apply(
                     lambda row: create_download_link(
@@ -100,6 +106,7 @@ def display():
         with col3:
             if st.button('Next') and page_num < total_pages - 1:
                 st.session_state.page_num += 1
+
 
 if __name__ == "__main__":
     display()
