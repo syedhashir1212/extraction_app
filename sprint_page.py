@@ -7,10 +7,16 @@ import datetime
 
 warnings.filterwarnings('ignore')
 
-def fetch_data_from_db(search_by, search_value, after_date=None):
+def fetch_data_from_db(search_by=None, search_value=None, after_date=None, show_all=False):
     conn = sqlite3.connect('inspections.db')
     
-    if search_by == 'expire_date' and after_date:
+    if show_all:
+        query = """
+        SELECT * FROM inspections
+        WHERE Customer IN ('SO&GSF', 'SO&GS', 'SOAGS', 'SOAGSF')
+        """
+        params = ()
+    elif search_by == 'expire_date' and after_date:
         query = f"""
         SELECT * FROM inspections
         WHERE {search_by} > ?
@@ -28,6 +34,7 @@ def fetch_data_from_db(search_by, search_value, after_date=None):
     df = pd.read_sql_query(query, conn, params=params)
     conn.close()
     return df
+
 
 def create_download_link(file_data, file_name):
     b64 = base64.b64encode(file_data).decode()
